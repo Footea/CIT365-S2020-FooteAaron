@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*CIT365 S2020
+ * Aaron Foote
+ * Week 1
+ */
+
+
+using System;
 
 namespace ConsoleApplication
 {
@@ -35,11 +41,35 @@ namespace ConsoleApplication
             //WriteLine output day's to xmas
             Console.WriteLine();
             Console.WriteLine("There are " + daysLeft + " till Christmas!");
-            
+
+            //Add the program example from required reading section 2.1 C# Programming Yellow Book by Rob Miles.
+            double width, height, woodLength, glassArea;
+            string widthString, heightString;
+
+            //input for width
+            Console.Write("Please enter the Width of Window: ");
+            widthString = Console.ReadLine();
+            width = double.Parse(widthString);
+
+            //input for height
+            Console.Write("Please enter the Height of Window: ");
+            heightString = Console.ReadLine();
+            height = double.Parse(heightString);
+
+
+            //computations for woodLength, glassArea
+            woodLength = 2 * (width + height) * 3.25;
+            glassArea = 2 * (width * height);
+
+            //output of variables
+            Console.WriteLine();
+            Console.WriteLine("The length of the wood is {0} feet", woodLength);
+            Console.WriteLine("The area of glass is {0} square metres", glassArea);
+
 
 
 
 
         }
-    }
-}
+    }// end class Program
+} // end namespace ConsoleApplication
