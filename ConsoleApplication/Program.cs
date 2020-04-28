@@ -19,8 +19,8 @@ namespace ConsoleApplication
             string location = "Arizona";
 
             //WriteLine outputs
-            Console.WriteLine("My name is " + name + ".");
-            Console.WriteLine("I am from " + location + "!");
+            Console.WriteLine($"My name is {name}!");
+            Console.WriteLine($"I am from {location}!");
 
 
             //Current date, no time
@@ -28,6 +28,7 @@ namespace ConsoleApplication
 
             //WriteLine output today's date
             Console.WriteLine();
+             //Console.WriteLine(thisDay.ToString("D"));
             Console.WriteLine(thisDay.ToString("D"));
 
 
@@ -40,7 +41,7 @@ namespace ConsoleApplication
 
             //WriteLine output day's to xmas
             Console.WriteLine();
-            Console.WriteLine("There are " + daysLeft + " till Christmas!");
+            Console.WriteLine($"There are {daysLeft} till Christmas!");
 
             //Add the program example from required reading section 2.1 C# Programming Yellow Book by Rob Miles.
             double width, height, woodLength, glassArea;
@@ -63,8 +64,8 @@ namespace ConsoleApplication
 
             //output of variables
             Console.WriteLine();
-            Console.WriteLine("The length of the wood is {0} feet", woodLength);
-            Console.WriteLine("The area of glass is {0} square metres", glassArea);
+            Console.WriteLine($"The length of the wood is {woodLength} feet");
+            Console.WriteLine($"The area of glass is {glassArea} square metres");
 
 
 
