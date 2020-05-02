@@ -4,6 +4,7 @@
  */
 
 using System;
+using System.Media;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -67,7 +68,7 @@ namespace MathQuiz
 
         }// Form1_Load
 
-
+       
 
         // <summary>
         // Start the quiz by filling in all of the problems
@@ -125,6 +126,8 @@ namespace MathQuiz
             dividedRightLabel.Text = divisor.ToString();
             quotient.Value = 0;
 
+           
+
             // Start the timer.
             timeLeft = 30;
             timeLabel.Text = "30 seconds";
@@ -157,7 +160,7 @@ namespace MathQuiz
                 timeLabel.Text = timeLeft + " seconds";
                 timeLabel.BackColor = Color.Green;
             }
-           else if (timeLeft > 6)
+           else if (timeLeft < 6)
             {
 
                 timeLabel.BackColor = Color.Red;
@@ -168,7 +171,6 @@ namespace MathQuiz
                 // If the user ran out of time, stop the timer, show
                 // a MessageBox, and fill in the answers.
                 timer1.Stop();
-                timeLabel.BackColor = Color.Red;
                 timeLabel.Text = "Time's up!";
                 MessageBox.Show("You didn't finish in time.", "Sorry!");
                 sum.Value = addend1 + addend2;
@@ -198,6 +200,11 @@ namespace MathQuiz
                 // Time Left label. 
                 timeLeft--;
                 timeLabel.Text = timeLeft + " seconds";
+                if(timeLeft < 6)
+                {
+                    timeLabel.BackColor = Color.Red;
+                    startButton.Enabled = true;
+                }
             }
             else
             {
@@ -210,11 +217,9 @@ namespace MathQuiz
                 difference.Value = minuend - subtrahend;
                 product.Value = multiplicand * multiplier;
                 quotient.Value = dividend / divisor;
+                timeLabel.BackColor = Color.White;
                 startButton.Enabled = true;
             }
-
-
-
 
         }
 
@@ -231,6 +236,62 @@ namespace MathQuiz
         }
 
 
-       
+        private void sum_ValueChanged(object sender, EventArgs e)
+        {
+            if (sum.Value == addend1 + addend2)
+            {
+                sum.BackColor = Color.Green;
+                SoundPlayer simpleSound = new SoundPlayer(@"c:\Windows\Media\chimes.wav");
+                simpleSound.Play();
+            }
+            else if (sum.Value != addend1 + addend2)
+            {
+                sum.BackColor = Color.White;
+            }
+        }
+
+        private void difference_ValueChanged(object sender, EventArgs e)
+        {
+            if (difference.Value == minuend - subtrahend)
+            {
+                difference.BackColor = Color.Green;
+                SoundPlayer simpleSound = new SoundPlayer(@"c:\Windows\Media\chimes.wav");
+                simpleSound.Play();
+            }
+            else if (quotient.Value != minuend - subtrahend)
+            {
+                difference.BackColor = Color.White;
+            }
+        }
+
+        private void product_ValueChanged(object sender, EventArgs e)
+        {
+            if (product.Value == multiplicand * multiplier)
+            {
+                product.BackColor = Color.Green;
+                SoundPlayer simpleSound = new SoundPlayer(@"c:\Windows\Media\chimes.wav");
+                simpleSound.Play();
+            }
+            else if (product.Value != multiplicand * multiplier)
+            {
+                product.BackColor = Color.White;
+            }
+        }
+
+        private void quotient_ValueChanged(object sender, EventArgs e)
+        {
+            if (quotient.Value == dividend / divisor)
+            {
+                quotient.BackColor = Color.Green;
+                SoundPlayer simpleSound = new SoundPlayer(@"c:\Windows\Media\chimes.wav");
+                simpleSound.Play();
+            }
+            else if (quotient.Value != dividend / divisor)
+            {
+                quotient.BackColor = Color.White;
+            }
+           
+
+        }
     } // end artial class
 } //end namespace MathQuiz

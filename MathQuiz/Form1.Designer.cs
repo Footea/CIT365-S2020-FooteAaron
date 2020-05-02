@@ -63,9 +63,11 @@
             // 
             // timeLabel
             // 
-            this.timeLabel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.timeLabel.BackColor = System.Drawing.SystemColors.Control;
             this.timeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.timeLabel.Cursor = System.Windows.Forms.Cursors.WaitCursor;
             this.timeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.timeLabel.ForeColor = System.Drawing.Color.Black;
             this.timeLabel.Location = new System.Drawing.Point(320, 14);
             this.timeLabel.Name = "timeLabel";
             this.timeLabel.Size = new System.Drawing.Size(233, 30);
@@ -137,6 +139,7 @@
             this.sum.Size = new System.Drawing.Size(117, 35);
             this.sum.TabIndex = 6;
             this.sum.UseWaitCursor = true;
+            this.sum.ValueChanged += new System.EventHandler(this.sum_ValueChanged);
             this.sum.Enter += new System.EventHandler(this.answer_Enter);
             // 
             // difference
@@ -147,6 +150,7 @@
             this.difference.Size = new System.Drawing.Size(117, 35);
             this.difference.TabIndex = 11;
             this.difference.UseWaitCursor = true;
+            this.difference.ValueChanged += new System.EventHandler(this.difference_ValueChanged);
             this.difference.Enter += new System.EventHandler(this.answer_Enter);
             // 
             // label3
@@ -201,6 +205,7 @@
             this.product.Size = new System.Drawing.Size(117, 35);
             this.product.TabIndex = 16;
             this.product.UseWaitCursor = true;
+            this.product.ValueChanged += new System.EventHandler(this.product_ValueChanged);
             this.product.Enter += new System.EventHandler(this.answer_Enter);
             // 
             // label9
@@ -255,6 +260,7 @@
             this.quotient.Size = new System.Drawing.Size(117, 35);
             this.quotient.TabIndex = 21;
             this.quotient.UseWaitCursor = true;
+            this.quotient.ValueChanged += new System.EventHandler(this.quotient_ValueChanged);
             this.quotient.Enter += new System.EventHandler(this.answer_Enter);
             // 
             // label13
@@ -304,7 +310,7 @@
             // startButton
             // 
             this.startButton.AutoSize = true;
-            this.startButton.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.startButton.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.startButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.startButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startButton.Location = new System.Drawing.Point(188, 315);
@@ -360,6 +366,7 @@
             this.Controls.Add(this.plusLeftLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.timeLabel);
+            this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

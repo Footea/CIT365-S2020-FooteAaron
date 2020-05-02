@@ -21,5 +21,10 @@ namespace MegaDesk
         {
 
         }
+
+        private void addNewQuote_B_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
