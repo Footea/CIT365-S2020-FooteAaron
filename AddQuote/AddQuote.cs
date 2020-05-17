@@ -8,23 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MegaDesk
+namespace AddQuote
 {
-    public partial class MegaDesk : Form
+    public partial class Form1 : Form
     {
-        public MegaDesk()
+        public Form1()
         {
             InitializeComponent();
         }
 
-        private void MegaDesk_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void addNewQuote_B_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
