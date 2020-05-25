@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace MegaDesk
 {
@@ -14,121 +16,186 @@ namespace MegaDesk
         const int BASEPRICE = 200;
         const int DESKBASEAREA = 1000;
         const int DRAWERCOST = 50;
-        
-        public Desk desk { get; set; }
-        public int quoteTotal { get; set; }
-        public string customerName { get; set; }
-        public int rushday { get; set; }
-        public string quoteDate { get; set; }
-       
-        
-        //Desk Quote Information
-        
-        
-        
-        
-       
-        
 
-        public static int getQuotePrice(int width, int depth, int drawers, int materialcost, int rushday)
+        public double price;
+        public int osPrice;
+        public int drawPrice;
+        public string customerName;
+        public int rushDays;
+        public int shippingPrice;
+        public string quoteDate;
+        //Rush Order Prices file read and 2D Array created    
+        public const string RUSHORDERPRICE = (@"C:\RushOrderPrices\rushOrderPrices.txt");  // @"file path"
+
+        //customerName
+        public string GetCustomerName()
         {
-            int quoteprice = BASEPRICE + deskAreaPrice(width, depth) + drawerPrice(drawers)  + rushOrderPrice(rushday, depth, width) + materialcost;
-            return quoteprice; 
+            return customerName;
+        }
+        public string SetCustomerName(string custname)
+        {
+            return this.customerName = custname;
+        }
+
+        //rushDays
+        public int GetRushDays()
+        {
+            return rushDays;
+        }
+        public void SetRushDays(int rdays)
+        {
+            this.rushDays = rdays;            
+        }
+
+        //quoteDate
+        public string GetQuoteDate()
+        {
+            return quoteDate;
+        }
+        public void SetQuoteDate (string qdate)
+        {
+            this.quoteDate = qdate;
+        }
+
+        //price
+        public double GetPrice()
+        {
+            return price;
+        }
+        public void SetPrice(double dprice)
+        {
+            this.price = dprice;
         }
        
+        
+        // oversize cost
+        public int GetOverSizeCost()
+        {
+            return osPrice;
+        }
+        public void setOverSizeCost(int oscost)
+        {
+            this.osPrice = oscost;
+        }
 
-       
+        //drawers cost 
+        public int DrawerCost( int drawers)
+        {
+            drawPrice = drawers * 50;
+            return drawPrice;
+        }
 
-        //public getMaterialType(int material)
-       // {
+        //Reads text file and builds 2D Array roPrice   
+        public int[,] GetRushOrder()
+        {
+            try
+            {
+                if (!File.Exists(@"C:\RushOrderPrices\rushOrderPrices.txt"))
+                    throw new FileNotFoundException();
+            }
+            catch (FileNotFoundException e)
+            {
+                MessageBox.Show("Oops somthing went wrong, no file exist!");
+
+            }
+
+            string[] prices = File.ReadAllLines(RUSHORDERPRICE);
+
+
+            int[,] roPrice = new int[3, 3];
+            for (int rop1 = 0; rop1 < 3; rop1++)
+            {
+                for (int rop2 = 0; rop2 < 3; rop2++)
+                {
+                    roPrice[rop1, rop2] = Int32.Parse(prices[(rop1 * 3) + rop2]);
+                }
+            }
+            return roPrice;
+        }
+
+        //Calculate Rush Order
+        public int ShippingCost(int sc)
+        {
+            switch (rushDays)
+            {
+                case 0://3 Day
+                    if (sc < 1000)
+                    {
+                        shippingPrice = GetRushOrder()[0, 0];
+                        // return 60;
+                        return GetRushOrder()[0, 0];
+                    }
+                    else if (sc > 2000)
+                    {
+                        shippingPrice = GetRushOrder()[0, 2];
+                        // return 80;
+                        return GetRushOrder()[0, 2];
+                    }
+                    else
+                    {
+                        shippingPrice = GetRushOrder()[0, 1];
+                        // return 70;
+                        return GetRushOrder()[0, 1];
+                    }
+                case 1://5 Day
+                    if (sc < 1000)
+                    {
+                        shippingPrice = GetRushOrder()[1, 0];
+                        // return 40;
+                        return GetRushOrder()[1, 0];
+                    }
+
+                    else if (sc > 2000)
+                    {
+                        shippingPrice = GetRushOrder()[1, 2];
+                        //return 60;
+                        return GetRushOrder()[1, 2];
+                    }
+                    else
+                    {
+                        shippingPrice = GetRushOrder()[1, 1];
+                        //return 50;
+                        return GetRushOrder()[1, 1];
+                    }
+                case 2://7 Day
+                    if (sc < 1000)
+                    {
+                        shippingPrice = GetRushOrder()[2, 0];
+                        //return 30;
+                        return GetRushOrder()[2, 0];
+                    }
+                    else if (sc > 2000)
+                    {
+                        shippingPrice = GetRushOrder()[2, 2];
+                        //return 40;
+                        return GetRushOrder()[2, 2];
+                    }
+                    else
+                    {
+                        shippingPrice = GetRushOrder()[2, 1];
+                        //return 35;
+                        return GetRushOrder()[2, 1];
+                    }
+                case 3://Normal
+                    shippingPrice = 0;
+                    return 0;
+                default:
+                    return 0;
+            }
+        }
+
+        // public int MaterialCost(int material)
+        // {
         //   int material = 
 
-         //       return material;
-       // }
+        //       return material;
+        // }
 
-        public static int DeskSurface(int width, int depth)
+        //totalCost
+        public void TotalCost()
         {
-                return width * depth;
-        } 
-
-        public static int deskAreaPrice(int width, int depth)
-        {
-            int deskarea = DeskSurface(width, depth);
-
-                if (deskarea - DESKBASEAREA > 0)
-                    return deskarea - DESKBASEAREA;
-                else
-                    return 0;
-        }
-
-        public static int drawerPrice(int drawers)
-        {
-            return drawers * DRAWERCOST;
-        }
-
-        public static int rushOrderPrice(int rushday,int depth, int width)
-        {
-            int deskarea = width * depth;
-            int rushprice = 0;
-            switch (rushday)
-            {
-              
-                case 1:
-                    if (deskarea > 2000)
-                        rushprice = 40;
-                    else if (deskarea < 2000 && deskarea > 1000)
-                        rushprice = 35;
-                    else
-                        rushprice = 30;
-                    break;
-     
-                case 2:
-                    if (deskarea > 2000)
-                        rushprice = 60;
-                    else if (deskarea < 2000 && deskarea > 1000)
-                        rushprice = 50;
-                    else
-                        rushprice = 40;
-                    break;
-
-                case 3:
-                    if (deskarea > 2000)
-                        rushprice = 80;
-                    else if (deskarea < 2000 && deskarea > 1000)
-                        rushprice = 70;
-                    else
-                        rushprice = 60;
-                    break;
-
-                default:
-                    rushprice = 0;
-                    break;
-            }
-                return rushprice;
-        }
-
-        private static int materialCost(string material)
-        {
-            int materialcost;
-            switch (material)
-            {
-                case "Rosewood":
-                    materialcost = 300;
-                    break;
-                case "Oak":
-                    materialcost = 200;
-                    break;
-                case "Veneer":
-                    materialcost = 150;
-                    break;
-                case "Laminate":
-                    materialcost = 100;
-                    break;
-                default:
-                    materialcost = 50;
-                    break;
-            }
-            return materialcost;
+            double total = shippingPrice + drawPrice + osPrice + BASEPRICE;
+            SetPrice(total);
         }
 
 

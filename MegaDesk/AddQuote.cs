@@ -16,50 +16,32 @@ namespace MegaDesk
     public partial class AddQuote : Form
     {
 
-        Desk.Material material;
-        public string customerName;
-        public string quote;
-        private int width = 0;
-        private int depth = 0;
-        private int drawers = 0;
-        public int deskarea = 0;
-        private int materialcost = 0;
-        public int rushday = 0;
-       // public string quote;
-        
-        
-        
- 
-        DateTime date = new DateTime();
-
-
 
         public AddQuote()
         {
             InitializeComponent();
 
            //Populate enum on AddQuote Form using List and Cast
-           List<Desk.Material> MaterialList = Enum.GetValues(typeof(Desk.Material)).Cast<Desk.Material>().ToList();
+           List<Enum.DesktopMaterial> MaterialList = Enum.DesktopMaterial.GetValues(typeof(Enum.DesktopMaterial)).Cast<Enum.DesktopMaterial>().ToList();
            comboDeskType.DataSource = MaterialList;
-            
 
+            label4.Text = DateTime.Now.ToString("MM/dd/yyyy");
+            dquote.SetQuoteDate(label14.Text);
         }
-
-
-
-        private void InputCustomerName_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-
 
         private void AddQuote_Load(object sender, EventArgs e)
         {
-            label4.Text = DateTime.Now.ToLongDateString();
             rushOrder.Text = "Select Shipping";
         }
 
+        readonly Desk desk = new Desk();
+        readonly DeskQuote dquote = new DeskQuote();
+
+        //input Name
+        private void InputCustomerName_TextChanged(object sender, EventArgs e)
+        {
+            dquote.SetCustomerName(InputCustomerName.Text);
+        }
 
 
         //Chosen desk surface and assigned to variable
@@ -100,40 +82,36 @@ namespace MegaDesk
             return materialcost;
         }
 
-        private void inputCustomerName(object sender, CancelEventArgs e)
-        {
-            customerName = InputCustomerName.Text;
-        }
+ 
 
 
 
         //Desk Drawer input and validation of input
         private void inputDeskDrawers(object sender, CancelEventArgs e)
         {
-           
-            try
-            {
-                drawers = Int32.Parse(deskDrawers.Text);
-            }
+            SetDrawerPrice();
+            TotalCost();
+        }
+        private void SetDrawerPrice()
+        {
+            int drawers = Int32.Parse(deskDrawers.Text);
+            label15.Text = Convert.ToString(drawers);
+            dquote.DrawerCost(drawers);
+            lblDrawerCost.Text = dquote.DrawerCost(desk.GetNumDrawers()).ToString() + ".00";
 
-            catch (Exception)
-            {
-                e.Cancel = true;
-                MessageBox.Show("Please enter only numbers into the width field");
-            }
-            if (drawers < 0 || drawers > 8)
-            { 
-                    MessageBox.Show("Please enter numbers between 0 and 7");
-            }   
         }
 
         //Desk Width input and validation of input
         private void inputDeskWidth(object sender, CancelEventArgs e)
         {
-            
+            int width = Int32.Parse(deskWidth.Text);
+            label8.Text = Convert.ToString(width);
+            DeskTotalArea();
+            TotalCost();
+
             try
             {
-                width = Int32.Parse(deskWidth.Text);
+              width = Int32.Parse(deskWidth.Text);
             }
             catch (Exception)
             {
@@ -149,28 +127,36 @@ namespace MegaDesk
 
         //Desk Depth input and validation of input
         private void inputDeskDepth(object sender, CancelEventArgs e)
-        {
-            
+        {  
             try
             {
-               depth = Int32.Parse(deskDepth.Text);
+                int depth = Int32.Parse(deskDepth.Text);
             }
             catch (Exception)
             {
                 e.Cancel = true;
                 MessageBox.Show("Please enter only numbers into the width field");
             }
-            if (depth < Desk.MINDEPTH|| depth > Desk.MAXDEPTH)
+            if (   < Desk.MINDEPTH|| depth > Desk.MAXDEPTH)
             {
                 MessageBox.Show("Please enter numbers between 24 and 96");
             }
+            
         }
+        private void inputDeskDepth_Textchanged(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void inputDeskWidth_Textchanged(object sender, CancelEventArgs e)
+        {
+
+        }
+
         private void rushOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
             rushOrder.Text = "Select Shipping";
-            rushday = rushOrder.SelectedIndex;
-          
-           
+            rushday = rushOrder.SelectedIndex;  
         }
 
         //btn that shows summary of choice before submitting for price
@@ -179,10 +165,10 @@ namespace MegaDesk
             string quote;
             int deskarea = width * depth;
 
-            label2.Text = DateTime.Now.ToLongDateString();
+            label2.Text = DateTime.Now.ToString("MM/dd/yyyy"); ;
             label3.Text = Convert.ToString(InputCustomerName.Text);
-            label8.Text = Convert.ToString(width);
-            label10.Text = Convert.ToString(depth);
+            
+            
             label15.Text = Convert.ToString(drawers);
             label14.Text = Convert.ToString(material);
             label17.Text = Convert.ToString(deskarea);
@@ -190,7 +176,7 @@ namespace MegaDesk
             label19.Text = Convert.ToString(rushday);
            // label20.Text = quote;
 
-            Desk desk = new Desk
+           Desk desk = new Desk
             { 
                 depth = depth,
                 width = width,
@@ -206,8 +192,8 @@ namespace MegaDesk
                 //  deskquote.quoteDate = DateTime.Now.ToLongDateString;
                 deskquote.quoteTotal = DeskQuote.getQuotePrice(desk.depth, desk.width, desk.drawers, desk.rushday, desk.materialcost);
             }
-
-            quote = Convert.ToString(deskquote.quoteTotal);
+           
+                     quote = Convert.ToString(deskquote.quoteTotal);
 
 
 
@@ -232,7 +218,7 @@ namespace MegaDesk
         {
 
 
-            Desk newDesk = new Desk(width, depth, drawers, materialcost);
+         //   Desk newDesk = new Desk(width, depth, drawers, materialcost);
           //  DeskQuote newDeskQuote = new DeskQuote(newDesk, customerName, deskarea, rushday);
           //  quote = Convert.ToString(newDeskQuote.QuotePrice());
              DisplayQuotes displayQuote = new DisplayQuotes(quote);

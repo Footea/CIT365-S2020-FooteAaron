@@ -8,7 +8,19 @@ using System.Windows.Forms;
 
 namespace MegaDesk
 {
-    public class Desk
+   public class Enum
+    {
+        public enum DesktopMaterial
+        {
+            Oak = 200,
+            Lamintate = 100,
+            Pine = 50,
+            Rosewood = 300,
+            Veneer = 150
+        };
+    }
+  
+    class Desk
     {
 
         // Constraints
@@ -16,9 +28,53 @@ namespace MegaDesk
         public const int MAXWIDTH = 96;
         public const int MINDEPTH = 12;
         public const int MAXDEPTH = 48;
+        int width;
+        int depth;
+        int numDrawers;
+        string material;
 
+        // width
+        public int GetWidth()
+        {
+            return width;
+        }
+      public void SetWidth(int width)
+        {
+            this.width = width;
+        }
 
-        public Desk(int width, int depth, int drawers, int rushday, int materialcost)
+        // Depth
+        public int GetDepth()
+        {
+            return depth;
+        }
+        public void SetDepth(int depth)
+        {
+            this.depth = depth;
+        }
+
+        public int GetNumDrawers()
+        {
+            return numDrawers;
+        }
+
+        //number of drawers
+        public void SetNumDrawers(int numDrawers)
+        {
+            this.numDrawers = numDrawers;
+        }
+
+        // material
+        public string GetMaterial()
+        {
+            return material;
+        }
+        public void SetMaterial( string material)
+        {
+            this.material = material;
+        }
+
+        /*  public Desk(int width, int depth, int drawers, int rushday, int materialcost)
         {
             this.width = width;
             this.depth = depth;
@@ -29,27 +85,11 @@ namespace MegaDesk
 
         //Desk properties
         public int materialcost { get; set; }
-        public int drawers { get; set; }
-        public int depth { get; set; }
-        public int width { get; set; }     
+      //  public int numDrawers { get; set; }
+      //   public int depth { get; set; }
+      //  public int width { get; set; }     
         public int rushday { get; set; }
+*/
 
-
-   
-
-        // Surface Material
-        public enum Material
-        {
-            Pine = 50,
-            Laminate = 100,
-            Veneer = 150,
-            Oak = 200,
-            Rosewood = 300
-        }
-    
     }
-       
-
-
-    
 }
