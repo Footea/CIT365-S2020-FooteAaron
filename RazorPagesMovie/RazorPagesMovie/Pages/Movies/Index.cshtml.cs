@@ -6,42 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using RazorPagesMovie.Data;
+using RazorPagesMovie;
 using RazorPagesMovie.Models;
 
 namespace RazorPagesMovie.Pages.Movies
 {
     public class IndexModel : PageModel
     {
-        private readonly RazorPagesMovie.Data.RazorPagesMovieContext _context;
+        private readonly RazorPagesMovie.RazorPagesMovieContext _context;
 
-        public IndexModel(RazorPagesMovie.Data.RazorPagesMovieContext context)
+        public IndexModel(RazorPagesMovie.RazorPagesMovieContext context)
         {
             _context = context;
         }
 
         public IList<Movie> Movie { get;set; }
+
         [BindProperty(SupportsGet = true)]
         public string SearchString { get; set; }
-        // Requires using Microsoft.AspNetCore.Mvc.Rendering;
-        public SelectList Genres { get; set; }
+
+        public SelectList Genres { get; set; }  // Requires using Microsoft.AspNetCore.Mvc.Rendering
+
         [BindProperty(SupportsGet = true)]
         public string MovieGenre { get; set; }
 
         public async Task OnGetAsync()
-        { 
-                // Use LINQ to get list of genres.
+        {
             IQueryable<string> genreQuery = from m in _context.Movie
-                                    orderby m.Genre
-                                    select m.Genre;
-        
-            // using System.Linq;
+                                            orderby m.Genre
+                                            select m.Genre;
             var movies = from m in _context.Movie
                          select m;
 
             if (!string.IsNullOrEmpty(SearchString))
             {
-                movies = movies.Where(s => s.Title.Contains(SearchString));// s =>s.Title.Contains() is Lambda Expression in LINQ
+                movies = movies.Where(s => s.Title.Contains(SearchString));
             }
 
             if (!string.IsNullOrEmpty(MovieGenre))

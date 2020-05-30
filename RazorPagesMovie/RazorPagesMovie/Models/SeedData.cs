@@ -1,22 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿#define Rating
+#if Rating
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
+
 namespace RazorPagesMovie.Models
 {
-    public static class SeedData
+    public class SeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new Data.RazorPagesMovieContext(
-                serviceProvider.GetRequiredService<
-                    DbContextOptions<Data.RazorPagesMovieContext>>()))
+            using (var context = new RazorPagesMovieContext(
+                serviceProvider.GetRequiredService<DbContextOptions<RazorPagesMovieContext>>()))
             {
-                // Look for any movies.
+                //look for any movies
                 if (context.Movie.Any())
                 {
-                    return;   // DB has been seeded
+                    return;  //DB has been seeded.
                 }
 
                 context.Movie.AddRange(
@@ -28,16 +31,14 @@ namespace RazorPagesMovie.Models
                         Price = 7.99M,
                         Rating = "R"
                     },
-
                     new Movie
                     {
-                        Title = "Ghostbusters ",
+                        Title = "Ghostbusters",
                         ReleaseDate = DateTime.Parse("1984-3-13"),
                         Genre = "Comedy",
                         Price = 8.99M,
                         Rating = "G"
                     },
-
                     new Movie
                     {
                         Title = "Ghostbusters 2",
@@ -46,7 +47,6 @@ namespace RazorPagesMovie.Models
                         Price = 9.99M,
                         Rating = "G"
                     },
-
                     new Movie
                     {
                         Title = "Rio Bravo",
@@ -55,9 +55,12 @@ namespace RazorPagesMovie.Models
                         Price = 3.99M,
                         Rating = "NA"
                     }
-                );
+                    );
                 context.SaveChanges();
+
+              
             }
         }
     }
 }
+#endif

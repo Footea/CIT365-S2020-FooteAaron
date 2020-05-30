@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RazorPagesMovie.Data;
+using RazorPagesMovie;
 
 namespace RazorPagesMovie.Migrations
 {
@@ -32,7 +32,7 @@ namespace RazorPagesMovie.Migrations
                         .HasMaxLength(30);
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Rating")
                         .IsRequired()
