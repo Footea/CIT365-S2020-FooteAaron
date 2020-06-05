@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyScriptureJournal.Models;
 
-namespace MyScriptureJournal.Data
+namespace MyScriptureJournal
 {
     public class MyScriptureJournalContext : DbContext
     {
@@ -14,6 +14,6 @@ namespace MyScriptureJournal.Data
         {
         }
 
-        public DbSet<MyScriptureJournal.Models.FavScripture> Scriptures { get; set; }
+        public DbSet<MyScriptureJournal.Models.JournalEntry> JournalEntry { get; set; }
     }
 }
