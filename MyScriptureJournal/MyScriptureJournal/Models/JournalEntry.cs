@@ -12,10 +12,24 @@ namespace MyScriptureJournal.Models
         public int ID { get; set; }
         [Display(Name = "Date")]
         [DataType(DataType.Date)]
+        [Required]
         public DateTime DatePosted { get; set; }
+
+        [StringLength(30, MinimumLength = 2)]
+        [Required]
         public string Book { get; set; }
+
+        
+        
+        [Required]
         public int Chapter { get; set; }
+
+        [StringLength(10, MinimumLength = 1)]
+        [Required]
         public string Verse { get; set; }
+
+        [StringLength(80, MinimumLength = 3)]
+        [Required]
         public string Note { get; set; }
     }
 }

@@ -14,10 +14,13 @@
 <form asp-page="./Index" method="get">
     <div class="form-actions no-Color">
         <p>
-            Note Keyword:
-            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            Book:
+            <input type="text" name="SearchStringB" value="@Model.CurrentFilter" />
             <input type="submit" value="Search" class="btn btn-secondary" /> |
-            <a asp-page="./Index" class="btn btn-primary">Back to full List</a>
+
+            Note:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-secondary" /> 
         </p>
 
     </div>

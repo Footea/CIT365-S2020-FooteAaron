@@ -21,13 +21,16 @@ namespace MyScriptureJournal.Pages.Entries
         public string CurrentFilter { get; set; }
         public string CurrentSort { get; set; }
         public IList<JournalEntry> JournalEntries { get; set; }
+        
 
 
-        public async Task OnGetAsync(string sortOrder, string searchString)
+        public async Task OnGetAsync(string sortOrder, string searchString, string searchStringB, string CurrentFilter, int? pageIndex)
         {
+            CurrentSort = sortOrder;
 
-            BookSort = String.IsNullOrEmpty(sortOrder) ? "book_desc" : "";
+            BookSort = String.IsNullOrEmpty(sortOrder) ? "Book" : "";
             DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+          
 
             CurrentFilter = searchString;
 
@@ -38,10 +41,14 @@ namespace MyScriptureJournal.Pages.Entries
             {
                 journalEntriesIQ = journalEntriesIQ.Where(e => e.Note.Contains(searchString));
             }
+            else if (!String.IsNullOrEmpty(searchStringB))
+            {
+                journalEntriesIQ = journalEntriesIQ.Where(e => e.Book.Contains(searchStringB));
+            }
 
             switch (sortOrder)
             {
-                case "book_desc":
+                case "Book":
                     journalEntriesIQ = journalEntriesIQ.OrderByDescending(e => e.Book);
                     break;
 
@@ -55,9 +62,11 @@ namespace MyScriptureJournal.Pages.Entries
                     
             }
 
-            JournalEntries = await journalEntriesIQ.AsNoTracking().ToListAsync();
+           
 
-       
+             JournalEntries = await journalEntriesIQ.AsNoTracking().ToListAsync();
+
+
         }
     }
 }
