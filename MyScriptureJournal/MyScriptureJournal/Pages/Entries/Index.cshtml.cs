@@ -10,9 +10,9 @@ namespace MyScriptureJournal.Pages.Entries
 {
     public class IndexModel : PageModel
     {
-        private readonly MyScriptureJournal.MyScriptureJournalContext _context;
+        private readonly MyScriptureJournalContext _context;
 
-        public IndexModel(MyScriptureJournal.MyScriptureJournalContext context)
+        public IndexModel(MyScriptureJournalContext context)
         {
             _context = context;
         }
@@ -24,15 +24,11 @@ namespace MyScriptureJournal.Pages.Entries
         
 
 
-        public async Task OnGetAsync(string sortOrder, string searchString, string searchStringB, string CurrentFilter, int? pageIndex)
-        {
-            CurrentSort = sortOrder;
+        public async Task OnGetAsync(string sortOrder, string searchString, string searchStringB)
+        {   
 
-            BookSort = String.IsNullOrEmpty(sortOrder) ? "Book" : "";
+            BookSort = String.IsNullOrEmpty(sortOrder) ? "book_desc" : "";
             DateSort = sortOrder == "Date" ? "date_desc" : "Date";
-          
-
-            CurrentFilter = searchString;
 
             IQueryable<JournalEntry> journalEntriesIQ = from e in _context.JournalEntry
                                                      select e;
@@ -48,11 +44,14 @@ namespace MyScriptureJournal.Pages.Entries
 
             switch (sortOrder)
             {
-                case "Book":
+                case "book_desc":
                     journalEntriesIQ = journalEntriesIQ.OrderByDescending(e => e.Book);
                     break;
 
                 case "Date":
+                    journalEntriesIQ = journalEntriesIQ.OrderBy(e => e.DatePosted);
+                    break;
+                case "date_desc":
                     journalEntriesIQ = journalEntriesIQ.OrderByDescending(e => e.DatePosted);
                     break;
 
