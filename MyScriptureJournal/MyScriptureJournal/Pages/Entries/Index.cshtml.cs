@@ -51,12 +51,13 @@ namespace MyScriptureJournal.Pages.Entries
                 case "Date":
                     journalEntriesIQ = journalEntriesIQ.OrderBy(e => e.DatePosted);
                     break;
+
                 case "date_desc":
                     journalEntriesIQ = journalEntriesIQ.OrderByDescending(e => e.DatePosted);
                     break;
 
                 default:
-                    journalEntriesIQ = journalEntriesIQ.OrderBy(e => e.ID);
+                    journalEntriesIQ = journalEntriesIQ.OrderBy(e => e.Book);
                     break;
                     
             }
