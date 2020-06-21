@@ -7,7 +7,7 @@
 <h1>LDS Movies</h1>
 
 <p>
-    <a asp-action="Create">Add Movie</a>
+    <a asp-action="Create" class="btn btn-outline-dark">Add Movie</a>
 </p>
 
 <form asp-controller="Movies" asp-action="Index" method="get">
@@ -17,7 +17,7 @@
         </select>
 
         Title: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" class="btn btn-light" />
+        <input type="submit" value="Filter" class="btn btn-dark" />
     </p>
 </form>
     <table class="table">
