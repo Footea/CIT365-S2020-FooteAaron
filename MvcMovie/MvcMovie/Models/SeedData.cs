@@ -58,7 +58,7 @@ namespace MvcMovie.Models
                         Genre = "Comedy",
                         Rating = "PG",
                         Price = 4.99M,
-                        Image = "/images/hometeacher.jpg"
+                        Image = "/images/hometeachers.jpg"
                     }
                 );
                 context.SaveChanges();
